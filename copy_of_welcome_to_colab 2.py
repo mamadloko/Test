@@ -13,13 +13,15 @@ import random
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import asyncio # Required for nest_asyncio and graceful shutdown
-import nest_asyncio # Import nest_asyncio
+import os
+
+# Import nest_asyncio
 
 # Apply nest_asyncio to allow asyncio to run inside an already running event loop.
 # This resolves "RuntimeError: This event loop is already running" in environments like Colab.
-nest_asyncio.apply()
 
-TOKEN = "8208306224:AAEcvJTQRGptN0wuv3_-URXvnrrF4RT8mbY"
+
+TOKEN = os.environ["TOKEN"]
 
 BOT_USERNAME = None  # Will be filled later once the bot starts and its username is known
 
@@ -209,4 +211,4 @@ print("Starting new Telegram bot application...")
 # `run_polling` starts the bot. `close_loop=False` is important for Colab
 # to prevent the bot from trying to close the main event loop.
 app.add_handler(CommandHandler("learn_samples", show_samples))
-app.run_polling(close_loop=False)
+app.run_polling()
