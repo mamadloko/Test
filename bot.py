@@ -13,7 +13,6 @@ import random
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import asyncio # Required for nest_asyncio and graceful shutdown
-import os
 
 # Import nest_asyncio
 
@@ -21,7 +20,7 @@ import os
 # This resolves "RuntimeError: This event loop is already running" in environments like Colab.
 
 
-TOKEN = os.environ["TOKEN"]
+TOKEN = "8208306224:AAEcvJTQRGptN0wuv3_-URXvnrrF4RT8mbY"
 
 BOT_USERNAME = None  # Will be filled later once the bot starts and its username is known
 
