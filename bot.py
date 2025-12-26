@@ -121,7 +121,7 @@ def generate_style_reply():
 # ======================
 # ADDRESSING
 # ======================
-BOT_NAMES = ["بات", "ربات", "bot"]
+BOT_NAMES = ["جکسن"]
 
 
 def is_addressed(update, context):
