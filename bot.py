@@ -12,7 +12,6 @@ from telegram.ext import (
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from collections import defaultdict, Counter
 
 # ======================
 # ENV
@@ -24,8 +23,6 @@ TOKEN = os.environ["TOKEN"]
 # FILES
 # ======================
 STYLE_MEMORY_FILE = "style_memory.json"
-WORD_WEIGHTS = defaultdict(Counter)
-
 
 # ======================
 # STATE
@@ -35,9 +32,7 @@ STYLE_MEMORY = []
 MAX_STYLE_MEMORY = 1000
 
 
-# ======================
-# TRAINING DATA (❌ دست نزن)
-# ======================
+# TRAINING DATA
 
 TRAINING_DATA = [
     ("سلام", ["سلام ", "سلام چطوری ", "السلام علی یا حضرت روشن"]),
@@ -101,12 +96,6 @@ def find_best_answer(text, threshold=0.35):
 
     return random.choice(answers[idx])
 
-def extract_subject(text):
-    words = text.split()
-    if not words:
-        return None
-    return words[0]
-
 
 # ======================
 # STYLE LEARNING
@@ -123,16 +112,6 @@ def generate_style_reply():
     if not STYLE_MEMORY:
         return None
     return random.choice(STYLE_MEMORY)
-
-def generate_weighted_opinion(subject):
-    if subject not in WORD_WEIGHTS:
-        return None
-
-    common = WORD_WEIGHTS[subject].most_common(3)
-    if not common:
-        return None
-
-    top_word = common[0][0]
 
     templates = [
         f"به نظر جمع، {subject} بیشتر {top_word} حساب میشه",
@@ -200,12 +179,7 @@ async def message_handler(update, context):
         if valid_style_message(text):
             STYLE_MEMORY.append(text)
 
-            subject = extract_subject(text)
-            if subject:
-                for w in text.split():
-                    if len(w) > 2:
-                        WORD_WEIGHTS[subject][w] += 1
-
+            
             if len(STYLE_MEMORY) > MAX_STYLE_MEMORY:
                 STYLE_MEMORY.pop(0)
 
@@ -217,11 +191,6 @@ async def message_handler(update, context):
     if not is_addressed(update, context):
         return
     
-    subject = extract_subject(text)
-    weighted = generate_weighted_opinion(subject)
-    if weighted:
-        await update.message.reply_text(weighted)
-        return
     
     # 3) جواب
     answer = find_best_answer(text)
