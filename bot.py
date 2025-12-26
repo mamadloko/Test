@@ -147,14 +147,14 @@ def is_addressed(update, context):
 async def learn_on(update, context):
     global LEARNING_MODE
     LEARNING_MODE = True
-    await update.message.reply_text("📚 یادگیری لحن روشن شد")
+    await update.message.reply_text("روشن شدم ولی کصباز نه")
 
 
 async def learn_off(update, context):
     global LEARNING_MODE
     LEARNING_MODE = False
     save_style_memory()
-    await update.message.reply_text("🛑 یادگیری خاموش شد و ذخیره شد")
+    await update.message.reply_text("آقا تمام")
 
 
 async def learn_status(update, context):
