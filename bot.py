@@ -204,7 +204,7 @@ async def message_handler(update, context):
             if subject:
                 for w in text.split():
                     if len(w) > 2:
-                WORD_WEIGHTS[subject][w] += 1
+                        WORD_WEIGHTS[subject][w] += 1
 
             if len(STYLE_MEMORY) > MAX_STYLE_MEMORY:
                 STYLE_MEMORY.pop(0)
