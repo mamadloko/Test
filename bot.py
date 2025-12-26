@@ -177,8 +177,7 @@ async def message_handler(update, context):
             STYLE_MEMORY.append(text)
 
             if len(STYLE_MEMORY) > MAX_STYLE_MEMORY:
-
-STYLE_MEMORY.pop(0)
+                STYLE_MEMORY.pop(0)
 
             # ذخیره‌ی دوره‌ای
             if len(STYLE_MEMORY) % 20 == 0:
