@@ -201,11 +201,10 @@ async def message_handler(update, context):
             STYLE_MEMORY.append(text)
 
             subject = extract_subject(text)
-
-if subject:
-    for w in text.split():
-        if len(w) > 2:
-            WORD_WEIGHTS[subject][w] += 1
+            if subject:
+                for w in text.split():
+                    if len(w) > 2:
+                    WORD_WEIGHTS[subject][w] += 1
 
             if len(STYLE_MEMORY) > MAX_STYLE_MEMORY:
                 STYLE_MEMORY.pop(0)
@@ -220,9 +219,9 @@ if subject:
     
     subject = extract_subject(text)
     weighted = generate_weighted_opinion(subject)
-if weighted:
-    await update.message.reply_text(weighted)
-    return
+    if weighted:
+        await update.message.reply_text(weighted)
+        return
     
     # 3) جواب
     answer = find_best_answer(text)
