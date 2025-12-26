@@ -215,16 +215,15 @@ if subject:
                 save_style_memory()
 
     # 2) فقط وقتی صدا شده جواب بده
+    if not is_addressed(update, context):
+        return
+    
     subject = extract_subject(text)
-
-weighted = generate_weighted_opinion(subject)
+    weighted = generate_weighted_opinion(subject)
 if weighted:
     await update.message.reply_text(weighted)
     return
     
-    if not is_addressed(update, context):
-        return
-
     # 3) جواب
     answer = find_best_answer(text)
     if answer:
